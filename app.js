@@ -1,6 +1,7 @@
 let boxes = document.querySelectorAll(".box");
 let rst = document.querySelector(".butn");
 let win = document.querySelector(".winner");
+let turns = 0
 
 let turnO = true;
 const winPatterns =  [
@@ -18,12 +19,13 @@ boxes.forEach( (box) => {
         if(turnO){
             box.innerText = "O";
             turnO = false;
+            turns++;
         } else {
             box.innerText = "X";
             turnO = true;
+            turns++;
         }
         box.disabled = true;
-
         checkWinner();
     })
 })
@@ -34,6 +36,10 @@ const disable = () => {
     for(let box of boxes){
         box.disabled = true;
     }
+}
+const showDraw = () => {
+    win.innerText = "Draw";
+    disable();
 }
 const enable = () => {
     for(let box of boxes){
@@ -59,6 +65,9 @@ const checkWinner = () => {
                 showWinner(pos1val);
             }
         }
+    }
+    if (turns == 9){
+        showDraw();
     }
 }
 rst.addEventListener("click", () => {
